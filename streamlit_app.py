@@ -1,6 +1,8 @@
 import streamlit as st
 import random
 import time
+import pandas as pd
+import numpy as np
 
 st.title("Hello Streamlit-er 👋")
 st.markdown(
@@ -15,32 +17,12 @@ st.markdown(
     """
 )
 
-st.text("this is a text")
+df = pd.DataFrame(np.random.randn(10, 5), columns=['A', 'B', 'C', 'D', 'E'])
+st.dataframe(df)
 
-if st.button("Send balloons!"):
-    st.balloons()
+st.table(df.head())
 
-st.write("Streamlit loves LLMs! 🤖 [Build your own chat app](https://docs.streamlit.io/develop/tutorials/llms/build-conversational-apps) in minutes, then make it powerful by adding images, dataframes, or even input widgets to the chat.")
-st.header("This is a header")
-st.caption("Note that this demo app isn't actually connected to any LLMs. Those are expensive ;)")
-st.code("This is a code section")
-
-col1, col2 = st.columns(2)
-with col1:
-    st.text("Column 1")
-with col2:
-    st.text("Column 2")
-
-with st.expander("More information"):
-    st.text("This is some additional info that can be hidden.")
-if st.button("Click me!"):
-    st.write("Button clicked!")
-
-name = st.text_input("Enter your name")
-st.write(f"Hello {name}")
-
-number = st.slider("Select a number", 0, 100)
-st.write(f"Selected number: {number}")
+st.json({"name": "John", "age": 30})
 
 option = st.selectbox("Choose an option", ['A', 'B', 'C'])
 st.write(f"You selected: {option}")
