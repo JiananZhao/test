@@ -18,11 +18,4 @@ st.markdown(
 )
 
 df = pd.DataFrame(np.random.randn(10, 5), columns=['A', 'B', 'C', 'D', 'E'])
-st.dataframe(df)
 
-st.table(df.head())
-
-st.json({"name": "John", "age": 30})
-
-option = st.selectbox("Choose an option", ['A', 'B', 'C'])
-st.write(f"You selected: {option}")
