@@ -3,6 +3,8 @@ import random
 import time
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 st.title("Hello Streamlit-er 👋")
 st.markdown(
@@ -17,6 +19,13 @@ st.markdown(
     """
 )
 
-df = pd.DataFrame(np.random.randn(10, 5), columns=['A', 'B', 'C', 'D', 'E'])
-st.dataframe(df)
-st.table(df(5))
+# Matplotlib Example
+fig, ax = plt.subplots()
+ax.plot([1, 2, 3], [10, 20, 30])
+st.pyplot(fig)
+
+# Seaborn Example
+df = sns.load_dataset("iris")
+fig, ax = plt.subplots()
+sns.scatterplot(x='sepal_length', y='sepal_width', data=df, ax=ax)
+st.pyplot(fig)
