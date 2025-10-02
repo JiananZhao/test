@@ -19,4 +19,4 @@ st.markdown(
 
 df = pd.DataFrame(np.random.randn(10, 5), columns=['A', 'B', 'C', 'D', 'E'])
 st.dataframe(df)
-st.table(df(1,5))
+st.table(df(5))
