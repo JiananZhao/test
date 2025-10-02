@@ -1,0 +1,7 @@
+streamlit
+random
+time
+pandas
+numpy
+matplotlib
+seaborn
