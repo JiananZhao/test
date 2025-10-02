@@ -24,8 +24,6 @@ fig, ax = plt.subplots()
 ax.plot([1, 2, 3], [10, 20, 30])
 st.pyplot(fig)
 
-# Seaborn Example
-df = sns.load_dataset("iris")
-fig, ax = plt.subplots()
-sns.scatterplot(x='sepal_length', y='sepal_width', data=df, ax=ax)
-st.pyplot(fig)
+st.sidebar.title("Sidebar")
+number = st.sidebar.slider("Select a number", 0, 100)
+st.write(f"Selected number: {number}")
