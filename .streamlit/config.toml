@@ -1,6 +1,11 @@
 [theme]
-primaryColor = "#F39C12"
-backgroundColor = "#FFFFFF"
-secondaryBackgroundColor = "#F2F2F2"
-textColor = "#000000"
-font = "sans serif"
+# Set the base mode to dark
+base="dark" 
+# A custom primary accent color (e.g., Streamlit Blue)
+primaryColor="#FF4B4B" 
+# The main app background
+backgroundColor="#0E1117" 
+# Sidebar and input widgets background
+secondaryBackgroundColor="#262730" 
+# Default font family
+font="sans serif" 
