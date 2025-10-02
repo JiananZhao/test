@@ -15,6 +15,8 @@ st.markdown(
     """
 )
 
+st.text("this is a text")
+
 if st.button("Send balloons!"):
     st.balloons()
 
