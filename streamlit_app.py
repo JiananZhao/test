@@ -33,3 +33,14 @@ with col2:
 
 with st.expander("More information"):
     st.text("This is some additional info that can be hidden.")
+if st.button("Click me!"):
+    st.write("Button clicked!")
+
+name = st.text_input("Enter your name")
+st.write(f"Hello {name}")
+
+number = st.slider("Select a number", 0, 100)
+st.write(f"Selected number: {number}")
+
+option = st.selectbox("Choose an option", ['A', 'B', 'C'])
+st.write(f"You selected: {option}")
