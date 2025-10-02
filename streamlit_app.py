@@ -25,3 +25,11 @@ st.header("This is a header")
 st.caption("Note that this demo app isn't actually connected to any LLMs. Those are expensive ;)")
 st.code("This is a code section")
 
+col1, col2 = st.columns(2)
+with col1:
+    st.text("Column 1")
+with col2:
+    st.text("Column 2")
+
+with st.expander("More information"):
+    st.text("This is some additional info that can be hidden.")
