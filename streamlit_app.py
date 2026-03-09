@@ -135,7 +135,7 @@ try:
         t1.dataframe(data['q_income'])
         t2.dataframe(data['q_balance'])
         t3.dataframe(data['q_cash'])
-
+    st.write(list(data['q_income'].index))
 except Exception as e:
     st.error(f"分析出错：{e}")
     st.info("提示：请检查网络连接或股票代码是否在 Yahoo Finance 上存在。")
