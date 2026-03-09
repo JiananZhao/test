@@ -77,7 +77,7 @@ with st.sidebar:
     st.divider()
     st.header("2. WACC 自动计算器")
     erp = st.number_input("股权风险溢价 (ERP %)", value=5.5, step=0.1) / 100
-    tax_rate = st.number_input("企业所得税率 (%)", value='tax_rate', step=1.0)
+    tax_rate = st.number_input("企业所得税率 (%)", data['tax_rate'], step=1.0)
     
     st.divider()
     st.header("3. 估值核心假设")
