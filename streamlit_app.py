@@ -69,7 +69,9 @@ def get_valuation_data(ticker_symbol):
 # --- 2. Streamlit UI ---
 st.set_page_config(page_title="自动化硬核估值台", layout="wide")
 st.title("⚖️ 自动化 WACC & 动态股本 DCF 模型")
-
+try:
+    data = get_valuation_data(ticker_input)
+    
 with st.sidebar:
     st.header("1. 目标选择")
     ticker_input = st.text_input("股票代码", value="TEAM").upper()
@@ -77,7 +79,8 @@ with st.sidebar:
     st.divider()
     st.header("2. WACC 自动计算器")
     erp = st.number_input("股权风险溢价 (ERP %)", value=5.5, step=0.1) / 100
-    tax_rates = st.number_input("企业所得税率 (%)", value=21, step=1.0) / 100
+    # 使用抓取到的真实税率作为默认值，确保是 float 类型
+    tax_rate_input = st.number_input("企业所得税率 (%)", value=float(data['tax_rate'] * 100), step=1.0) / 100
     
     st.divider()
     st.header("3. 估值核心假设")
@@ -85,8 +88,7 @@ with st.sidebar:
     g_base = st.number_input("中性增长率 (g)", value=0.200, step=0.005, format="%.3f")
     terminal_g = st.number_input("永续增长率 (tg)", value=0.030, step=0.001, format="%.3f")
 
-try:
-    data = get_valuation_data(ticker_input)
+
     
     # --- 计算 WACC ---
     # Cost of Equity (CAPM)
@@ -101,7 +103,6 @@ try:
     with st.sidebar:
         final_wacc = st.number_input("最终折现率 (WACC)", value=float(calculated_wacc), step=0.001, format="%.3f", help="已根据 CAPM 自动计算")
         net_rate = st.number_input("预期年化股本变动率", value=data["hist_dilution"], step=0.001, format="%.3f")
-        tax_rates = st.number_input("企业所得税率 (%)", value=data["tax_rate"], step=0.001, format="%.3f")
 
     # --- 数据面板 ---
     st.subheader("📊 自动化参数审计")
