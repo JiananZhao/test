@@ -72,7 +72,12 @@ try:
     # Step 3: Use Data to populate other Sidebar inputs
     with st.sidebar:
         st.divider()
-        st.header("2. WACC 自动计算器")
+        st.header("2. 估值核心假设")
+        deduct_sbc = st.checkbox("扣除 SBC 影响", value=True)
+        g_base = st.number_input("中性增长率 (g)", value=0.200, step=0.005, format="%.3f")
+        terminal_g = st.number_input("永续增长率 (tg)", value=0.030, step=0.001, format="%.3f")
+        st.divider()
+        st.header("3. WACC 自动计算器")
         erp = st.number_input("股权风险溢价 (ERP %)", value=5.5, step=0.1) / 100
         tax_rate_input = st.number_input("企业所得税率 (%)", value=data['tax_rate']*100, step=1.0) / 100
         
@@ -87,13 +92,7 @@ try:
         
         final_wacc = st.number_input("最终折现率 (WACC)", value=float(calculated_wacc), step=0.001, format="%.3f")
         net_rate = st.number_input("预期年化股本变动率", value=data["hist_dilution"], step=0.001, format="%.3f")
-
-        st.divider()
-        st.header("3. 估值核心假设")
-        deduct_sbc = st.checkbox("扣除 SBC 影响", value=True)
-        g_base = st.number_input("中性增长率 (g)", value=0.200, step=0.005, format="%.3f")
-        terminal_g = st.number_input("永续增长率 (tg)", value=0.030, step=0.001, format="%.3f")
-
+        
     # --- 3. Dashboard Display ---
     st.subheader(f"📊 {ticker_input} 自动化参数审计")
     a1, a2, a3, a4 = st.columns(4)
