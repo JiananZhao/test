@@ -127,14 +127,18 @@ try:
             "内在价值": f"${price:.2f}", 
             "潜力": f"{(price/data['current_price']-1)*100:.1f}%"
         })
-    
-    st.table(pd.DataFrame(res))
-
-    with st.expander("🔍 查看原始财务数据"):
+        
+    with st.expander("🔍 查看季度财务数据"):
         t1, t2, t3 = st.tabs(["利润表", "资产负债表", "现金流表"])
         t1.dataframe(data['q_income'])
         t2.dataframe(data['q_balance'])
         t3.dataframe(data['q_cash'])
+    st.write(list(data['q_income'].index))
+    with st.expander("🔍 查看年度财务数据"):
+        t1, t2, t3 = st.tabs(["利润表", "资产负债表", "现金流表"])
+        t1.dataframe(data['a_income'])
+        t2.dataframe(data['a_balance'])
+        t3.dataframe(data['a_cash'])
     st.write(list(data['q_income'].index))
 except Exception as e:
     st.error(f"分析出错：{e}")
