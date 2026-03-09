@@ -132,17 +132,22 @@ try:
     st.table(pd.DataFrame(res))
     
     with st.expander("🔍 深度财务审计"):
+        # 修改点：不再调用不存在的 ticker 对象，而是使用 data 字典中存好的数据
         time_frame = st.radio("选择报告频率", ["年度 (Annual)", "季度 (Quarterly)"], horizontal=True)
         
-        # 根据选择切换数据源
         if "年度" in time_frame:
-            inc, bal, cf = ticker.financials, ticker.balance_sheet, ticker.cashflow
+            # 这些 key 对应你 get_valuation_data 函数中 return 的值
+            inc = data['a_income']
+            bal = data['a_balance']
+            cf = data['a_cash']
         else:
-            inc, bal, cf = ticker.quarterly_financials, ticker.quarterly_balance_sheet, ticker.quarterly_cashflow
+            inc = data['q_income']
+            bal = data['q_balance']
+            cf = data['q_cash']
         
         t1, t2, t3 = st.tabs(["利润表", "资产负债表", "现金流表"])
         
-        # 使用 .T 转置并格式化日期索引，方便用户横向对比年份
+        # 这里的 .T 转置可以让年份变成行，指标变成列，更易读
         t1.dataframe(inc.T.rename(index=lambda x: x.strftime('%Y-%m-%d')))
         t2.dataframe(bal.T.rename(index=lambda x: x.strftime('%Y-%m-%d')))
         t3.dataframe(cf.T.rename(index=lambda x: x.strftime('%Y-%m-%d')))
