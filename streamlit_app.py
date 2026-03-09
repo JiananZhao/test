@@ -132,11 +132,10 @@ try:
     st.table(pd.DataFrame(res))
     
     with st.expander("🔍 深度财务审计"):
-        # 修改点：不再调用不存在的 ticker 对象，而是使用 data 字典中存好的数据
         time_frame = st.radio("选择报告频率", ["年度 (Annual)", "季度 (Quarterly)"], horizontal=True)
         
+        # 从 data 字典中获取已抓取的数据
         if "年度" in time_frame:
-            # 这些 key 对应你 get_valuation_data 函数中 return 的值
             inc = data['a_income']
             bal = data['a_balance']
             cf = data['a_cash']
@@ -145,11 +144,16 @@ try:
             bal = data['q_balance']
             cf = data['q_cash']
         
+        # 格式化列名（日期）：将 Datetime 对象转换为字符串，只保留 YYYY-MM-DD
+        def format_cols(df):
+            df.columns = [c.strftime('%Y-%m-%d') if hasattr(c, 'strftime') else c for c in df.columns]
+            return df
+
         t1, t2, t3 = st.tabs(["利润表", "资产负债表", "现金流表"])
         
-        t1.dataframe(inc.rename(index=lambda x: x.strftime('%Y-%m-%d')))
-        t2.dataframe(bal.rename(index=lambda x: x.strftime('%Y-%m-%d')))
-        t3.dataframe(cf.rename(index=lambda x: x.strftime('%Y-%m-%d')))
+        t1.dataframe(format_cols(inc), use_container_width=True)
+        t2.dataframe(format_cols(bal), use_container_width=True)
+        t3.dataframe(format_cols(cf), use_container_width=True)
 
 except Exception as e:
     st.error(f"分析出错：{e}")
