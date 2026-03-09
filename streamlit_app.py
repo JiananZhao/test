@@ -77,7 +77,7 @@ with st.sidebar:
     st.divider()
     st.header("2. WACC 自动计算器")
     erp = st.number_input("股权风险溢价 (ERP %)", value=5.5, step=0.1) / 100
-    tax_rate = st.number_input("企业所得税率 (%)", data['tax_rate'], step=1.0)
+    tax_rate = st.number_input("企业所得税率 (%)", value=21, step=1.0) / 100
     
     st.divider()
     st.header("3. 估值核心假设")
@@ -101,6 +101,7 @@ try:
     with st.sidebar:
         final_wacc = st.number_input("最终折现率 (WACC)", value=float(calculated_wacc), step=0.001, format="%.3f", help="已根据 CAPM 自动计算")
         net_rate = st.number_input("预期年化股本变动率", value=data["hist_dilution"], step=0.001, format="%.3f")
+        tax_rate = st.number_input("企业所得税率 (%)", value=data["tax_rate"], step=0.001, format="%.3f")
 
     # --- 数据面板 ---
     st.subheader("📊 自动化参数审计")
