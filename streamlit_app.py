@@ -147,10 +147,9 @@ try:
         
         t1, t2, t3 = st.tabs(["利润表", "资产负债表", "现金流表"])
         
-        # 这里的 .T 转置可以让年份变成行，指标变成列，更易读
-        t1.dataframe(inc.T.rename(index=lambda x: x.strftime('%Y-%m-%d')))
-        t2.dataframe(bal.T.rename(index=lambda x: x.strftime('%Y-%m-%d')))
-        t3.dataframe(cf.T.rename(index=lambda x: x.strftime('%Y-%m-%d')))
+        t1.dataframe(inc.rename(index=lambda x: x.strftime('%Y-%m-%d')))
+        t2.dataframe(bal.rename(index=lambda x: x.strftime('%Y-%m-%d')))
+        t3.dataframe(cf.rename(index=lambda x: x.strftime('%Y-%m-%d')))
 
 except Exception as e:
     st.error(f"分析出错：{e}")
