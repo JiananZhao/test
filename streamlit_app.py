@@ -25,6 +25,8 @@ def get_valuation_data(ticker_symbol):
     # 3. 债务与税率相关
     total_debt = info.get('totalDebt', 0)
     # 尝试提取利息支出计算 Rd，若无则默认为 5%
+    tax_rate = income_stmt.loc["Tax Rate for Calc"].iloc[0] if "Tax Rate for Calc" in income_stmt.index else 0.21
+    
     try:
         interest_expense = abs(income_stmt.loc['Interest Expense'].iloc[0])
         rd = interest_expense / total_debt if total_debt > 0 else 0.05
@@ -60,7 +62,8 @@ def get_valuation_data(ticker_symbol):
         "net_debt": (total_debt - info.get("totalCash", 0)),
         "q_income": ticker.quarterly_financials,
         "q_balance": ticker.quarterly_balance_sheet,
-        "q_cash": ticker.quarterly_cashflow
+        "q_cash": ticker.quarterly_cashflow,
+        "tax_rate": tax_rate
     }
 
 # --- 2. Streamlit UI ---
@@ -74,7 +77,7 @@ with st.sidebar:
     st.divider()
     st.header("2. WACC 自动计算器")
     erp = st.number_input("股权风险溢价 (ERP %)", value=5.5, step=0.1) / 100
-    tax_rate = st.number_input("企业所得税率 (%)", value=21.0, step=1.0) / 100
+    tax_rate = st.number_input("企业所得税率 (%)", value=tax_rate, step=1.0)
     
     st.divider()
     st.header("3. 估值核心假设")
