@@ -23,7 +23,7 @@ def get_valuation_data(ticker_symbol):
     total_debt = info.get('totalDebt', 0)
     
     # Tax Rate
-    tax_rate = income_stmt.loc["Tax Rate for Calc"].iloc[0] if "Tax Rate for Calc" in income_stmt.index else 0.21
+    tax_rate = income_stmt.loc["Tax Rate for Calcs"].iloc[0] if "Tax Rate for Calcs" in income_stmt.index else 0.21
     
     # Cost of Debt (Rd)
     try:
