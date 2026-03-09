@@ -128,18 +128,24 @@ try:
             "潜力": f"{(price/data['current_price']-1)*100:.1f}%"
         })
         
-    with st.expander("🔍 查看季度财务数据"):
+    st.table(pd.DataFrame(res))
+    
+    with st.expander("🔍 深度财务审计"):
+        time_frame = st.radio("选择报告频率", ["年度 (Annual)", "季度 (Quarterly)"], horizontal=True)
+        
+        # 根据选择切换数据源
+        if "年度" in time_frame:
+            inc, bal, cf = ticker.financials, ticker.balance_sheet, ticker.cashflow
+        else:
+            inc, bal, cf = ticker.quarterly_financials, ticker.quarterly_balance_sheet, ticker.quarterly_cashflow
+        
         t1, t2, t3 = st.tabs(["利润表", "资产负债表", "现金流表"])
-        t1.dataframe(data['q_income'])
-        t2.dataframe(data['q_balance'])
-        t3.dataframe(data['q_cash'])
-    st.write(list(data['q_income'].index))
-    with st.expander("🔍 查看年度财务数据"):
-        t1, t2, t3 = st.tabs(["利润表", "资产负债表", "现金流表"])
-        t1.dataframe(data['a_income'])
-        t2.dataframe(data['a_balance'])
-        t3.dataframe(data['a_cash'])
-    st.write(list(data['q_income'].index))
+        
+        # 使用 .T 转置并格式化日期索引，方便用户横向对比年份
+        t1.dataframe(inc.T.rename(index=lambda x: x.strftime('%Y-%m-%d')))
+        t2.dataframe(bal.T.rename(index=lambda x: x.strftime('%Y-%m-%d')))
+        t3.dataframe(cf.T.rename(index=lambda x: x.strftime('%Y-%m-%d')))
+
 except Exception as e:
     st.error(f"分析出错：{e}")
     st.info("提示：请检查网络连接或股票代码是否在 Yahoo Finance 上存在。")
