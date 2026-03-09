@@ -52,7 +52,8 @@ def get_valuation_data(ticker_symbol):
         "rd": rd, "fcf_raw": fcf_raw, "sbc": sbc, "hist_dilution": float(hist_dilution),
         "current_price": info.get("currentPrice"), "shares": info.get("sharesOutstanding"),
         "net_debt": (total_debt - info.get("totalCash", 0)), "tax_rate": float(tax_rate),
-        "q_income": ticker.quarterly_financials, "q_balance": ticker.quarterly_balance_sheet, "q_cash": ticker.quarterly_cashflow
+        "q_income": ticker.quarterly_financials, "q_balance": ticker.quarterly_balance_sheet, "q_cash": ticker.quarterly_cashflow,
+        "a_income": ticker.annually_financials, "a_balance": ticker.annually_balance_sheet, "a_cash": ticker.annually_cashflow
     }
 
 # --- 2. UI Layout ---
@@ -135,7 +136,7 @@ try:
         
         # 根据选择切换数据源
         if "年度" in time_frame:
-            inc, bal, cf = ticker.financials, ticker.balance_sheet, ticker.cashflow
+            inc, bal, cf = ticker.annually_financials, ticker.annually_balance_sheet, ticker.annually_cashflow
         else:
             inc, bal, cf = ticker.quarterly_financials, ticker.quarterly_balance_sheet, ticker.quarterly_cashflow
         
