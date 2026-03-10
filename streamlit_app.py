@@ -57,8 +57,8 @@ def get_valuation_data(ticker_symbol):
     }
 
 # --- 2. UI Layout ---
-st.set_page_config(page_title="自动化硬核估值台", layout="wide")
-st.title("⚖️ 自动化 WACC & 动态股本 DCF 模型")
+st.set_page_config(page_title="Evalution", layout="wide")
+st.title("DCF Model")
 
 # Step 1: Get Ticker First
 with st.sidebar:
@@ -94,7 +94,7 @@ try:
         net_rate = st.number_input("预期年化股本变动率", value=data["hist_dilution"], step=0.001, format="%.3f")
         
     # --- 3. Dashboard Display ---
-    st.subheader(f"📊 {ticker_input} 自动化参数审计")
+    st.subheader(f"📊 {ticker_input} Parameters")
     a1, a2, a3, a4 = st.columns(4)
     a1.metric("无风险利率 (10Y)", f"{data['rf_rate']*100:.2f}%")
     a2.metric("Beta 系数", f"{data['beta']:.2f}")
